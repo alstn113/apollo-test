@@ -34,7 +34,7 @@ const Create = () => {
     });
   };
 
-  const [createPost] = useMutation(CREATE_POST, { onCompleted: createPostCompleted, refetchQueries: ["getPosts"] });
+  const [createPost] = useMutation(CREATE_POST, { onCompleted: createPostCompleted });
 
   function createPostCompleted() {
     history.push("/");

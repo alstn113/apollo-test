@@ -35,11 +35,11 @@ const PostDetails = () => {
 
   function handleDelete() {
     if (window.confirm("이 항목을 삭제하시겠습니까?")) {
-      deletePost({ variables: { id } });
+      deletePost({ variables: { id }, refetchQueries: [{ query: GET_POSTS }] });
     }
   }
 
-  const [deletePost] = useMutation(DELETE_POST, { onCompleted: deletePostCompleted, refetchQueries: [{ query: GET_POSTS }] });
+  const [deletePost] = useMutation(DELETE_POST, { onCompleted: deletePostCompleted });
 
   function deletePostCompleted() {
     history.push("/");
