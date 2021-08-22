@@ -26,4 +26,5 @@
     });
 
 -추가-
-store.evict({ \_\_ref: data.deletePost.\_id });
+
+    store.evict({ \_\_ref: data.deletePost.\_id });
