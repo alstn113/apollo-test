@@ -50,6 +50,8 @@ const PostDetails = () => {
               getPosts: postData.getPosts.filter((post) => post._id !== data.deletePost._id),
             },
           });
+          console.log(data);
+          store.evict({ __ref: data.deletePost._id });
         },
       });
     }

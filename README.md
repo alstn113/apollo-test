@@ -25,4 +25,5 @@
       },
     });
 
-    복잡하지만 캐시를 수정해서 빠름
+-추가-
+store.evict({ \_\_ref: data.deletePost.\_id });
