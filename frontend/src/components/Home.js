@@ -15,8 +15,8 @@ const GET_POSTS = gql`
 
 const Home = () => {
   const { loading, error, data } = useQuery(GET_POSTS);
-  if (loading) return <p className="loading">Loading...</p>;
-  if (error) return <p className="error">Error</p>;
+  if (loading) return <p className="content loading">Loading...</p>;
+  if (error) return <p className="content error">Error</p>;
   return data.getPosts && <PostList posts={data.getPosts} />;
 };
 

@@ -43,7 +43,7 @@ const Create = () => {
         store.writeQuery({
           query: GET_POSTS,
           data: {
-            getPosts: postData.getPosts.concat(data.createPost),
+            getPosts: postData?.getPosts?.concat(data.createPost),
           },
         });
       },

@@ -29,6 +29,17 @@
 
 -추가-
 
-    store.evict({ __ref: data.deletePost._id });
+    const identify = store.identify(data.deletePost);
+    store.evict({ id: identify });
+    store.evict({ id: "ROOT_QUERY", fieldName: "getPost", args: { _id: data.deletePost._id } });
 
     이거는 다른 캐시 삭제할 때 사용함
+
+    id: "apollo dev 창의 이름이라고 보면 됨 // Default: "ROOT_QUERY" "
+    fieldName: "이거는 예를 들면 남색 창 옆에 흰색 하위 값"
+    arg: "인수"
+
+    ex)
+    cache.evict({ id: "ROOT_QUERY", fieldName: "employees" }); 모든 직원 쿼리를 삭제합니다.
+    cache.evict({ id: "ROOT_QUERY", fieldName: "employees", args: { country: "US" }}); 특정 인수가 있는 하나의 쿼리를 삭제합니다.
+    PS, id기본값은 "ROOT_QUERY"&이므로 생략할 수 있습니다.
