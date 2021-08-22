@@ -5,7 +5,12 @@ import { useHistory } from "react-router-dom";
 
 const CREATE_POST = gql`
   mutation CreatePost($post: PostInput!) {
-    createPost(post: $post)
+    createPost(post: $post) {
+      _id
+      title
+      body
+      author
+    }
   }
 `;
 
@@ -14,6 +19,7 @@ const GET_POSTS = gql`
     getPosts {
       _id
       title
+      body
       author
     }
   }
@@ -30,11 +36,23 @@ const Create = () => {
     const post = { title, body, author };
     createPost({
       variables: { post },
-      refetchQueries: [{ query: GET_POSTS }],
+      update: (store, { data }) => {
+        const postData = store.readQuery({
+          query: GET_POSTS,
+        });
+        store.writeQuery({
+          query: GET_POSTS,
+          data: {
+            getPosts: postData.getPosts.concat(data.createPost),
+          },
+        });
+      },
     });
   };
 
-  const [createPost] = useMutation(CREATE_POST, { onCompleted: createPostCompleted });
+  const [createPost] = useMutation(CREATE_POST, {
+    onCompleted: createPostCompleted,
+  });
 
   function createPostCompleted() {
     history.push("/");

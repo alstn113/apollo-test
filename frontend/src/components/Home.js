@@ -7,6 +7,7 @@ const GET_POSTS = gql`
     getPosts {
       _id
       title
+      body
       author
     }
   }

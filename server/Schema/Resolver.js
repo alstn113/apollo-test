@@ -6,23 +6,23 @@ const resolvers = {
       return await Post.find({});
     },
     getPost: async (parent, args, context, info) => {
-      const { id } = args;
-      return await Post.findById({ _id: id });
+      const { _id } = args;
+      return await Post.findById(_id);
     },
   },
   Mutation: {
     createPost: async (parent, args, context, info) => {
       const { title, body, author } = args.post;
-      await Post.create({ title, body, author });
-      return "CREATE A POST";
+      const newPost = await Post.create({ title, body, author });
+      return newPost;
     },
     deletePost: async (parent, args, context, info) => {
-      const { id } = args;
-      await Post.findByIdAndRemove(id);
-      return `OK YOU DELETE A Post ${id} `;
+      const { _id } = args;
+      const post = await Post.findByIdAndRemove(_id);
+      return post;
     },
     updatePost: async (parent, args, context, info) => {
-      const { id } = args;
+      const { _id } = args;
       const { title, body, author } = args.post;
       const updates = {};
       if (title !== undefined) {
@@ -34,7 +34,7 @@ const resolvers = {
       if (author !== undefined) {
         updates.author = author;
       }
-      const post = await Post.findByIdAndUpdate(id, updates, { new: true });
+      const post = await Post.findByIdAndUpdate(_id, updates, { new: true });
       return post;
     },
   },

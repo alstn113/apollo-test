@@ -25,7 +25,7 @@ function App() {
           <Route exact path="/create">
             <Create />
           </Route>
-          <Route exact path="/posts/:id">
+          <Route exact path="/posts/:_id">
             <PostDetails />
           </Route>
           <Route path="*">

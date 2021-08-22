@@ -11,7 +11,7 @@ const typeDefs = gql`
   # Queries
   type Query {
     getPosts: [Post]
-    getPost(id: ID): Post
+    getPost(_id: ID): Post
   }
 
   # Mutations
@@ -22,9 +22,9 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createPost(post: PostInput): String
-    deletePost(id: ID): String
-    updatePost(id: ID, post: PostInput): Post
+    createPost(post: PostInput): Post
+    deletePost(_id: ID): Post
+    updatePost(_id: ID, post: PostInput): Post
   }
 `;
 

@@ -3,8 +3,8 @@ import { useQuery, useMutation, gql } from "@apollo/client";
 import { useHistory, useParams } from "react-router-dom";
 
 const GET_POST = gql`
-  query GetPost($id: ID!) {
-    getPost(id: $id) {
+  query GetPost($_id: ID!) {
+    getPost(_id: $_id) {
       _id
       title
       body
@@ -13,8 +13,10 @@ const GET_POST = gql`
   }
 `;
 const DELETE_POST = gql`
-  mutation DeletePost($id: ID!) {
-    deletePost(id: $id)
+  mutation DeletePost($_id: ID!) {
+    deletePost(_id: $_id) {
+      _id
+    }
   }
 `;
 const GET_POSTS = gql`
@@ -22,20 +24,34 @@ const GET_POSTS = gql`
     getPosts {
       _id
       title
+      body
       author
     }
   }
 `;
 
 const PostDetails = () => {
-  const { id } = useParams();
+  const { _id } = useParams();
   const history = useHistory();
 
-  const { loading, error, data } = useQuery(GET_POST, { variables: { id } });
+  const { loading, error, data } = useQuery(GET_POST, { variables: { _id } });
 
   function handleDelete() {
     if (window.confirm("이 항목을 삭제하시겠습니까?")) {
-      deletePost({ variables: { id }, refetchQueries: [{ query: GET_POSTS }] });
+      deletePost({
+        variables: { _id },
+        update: (store, { data }) => {
+          const postData = store.readQuery({
+            query: GET_POSTS,
+          });
+          store.writeQuery({
+            query: GET_POSTS,
+            data: {
+              getPosts: postData.getPosts.filter((post) => post._id !== data.deletePost._id),
+            },
+          });
+        },
+      });
     }
   }
 
