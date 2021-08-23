@@ -48,3 +48,24 @@
 문제발견!!!
     
     이게 create 라우터부터 시작을 하면 post-list 캐시가 없어서 오류가 발생함
+    
+    해결!
+    
+    update: (store, { data }) => {
+        try {
+          const postData = store.readQuery({
+            query: GET_POSTS,
+          });
+          store.writeQuery({
+            query: GET_POSTS,
+            data: {
+              getPosts: [...postData.getPosts, data.createPost],
+            },
+          });
+        } catch (error) {
+          return null;
+        }
+      },
+      
+    apollo 버전3부터 readquery에 값이 없으면 null반환이 아니라 오류 발생시킴
+    그래서 try catch로 오류 발생하면 null 
