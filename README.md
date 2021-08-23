@@ -43,3 +43,8 @@
     cache.evict({ id: "ROOT_QUERY", fieldName: "employees" }); 모든 직원 쿼리를 삭제합니다.
     cache.evict({ id: "ROOT_QUERY", fieldName: "employees", args: { country: "US" }}); 특정 인수가 있는 하나의 쿼리를 삭제합니다.
     PS, id기본값은 "ROOT_QUERY"&이므로 생략할 수 있습니다.
+
+
+문제발견!!!
+    
+    이게 create 라우터부터 시작을 하면 post-list 캐시가 없어서 오류가 발생함
